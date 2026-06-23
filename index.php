@@ -13,6 +13,7 @@ $departments = get_departments();
 <body>
     <h1>Departments list</h1>
     
+    <a href="search.php">Search Employees</a>
     <table border="1">
         <thead>
             <tr>

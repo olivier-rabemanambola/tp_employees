@@ -22,3 +22,15 @@ where emp_no = 10001;
 select * 
 from titles 
 where emp_no = 10001;
+
+SELECT 
+    employees.gender AS gender, 
+    titles.title AS title, 
+    COUNT(DISTINCT employees.emp_no) AS nb_employees, -- DISTINCT évite les doublons si le titre a changé
+    AVG(salaries.salary) AS avg_salary
+FROM titles
+JOIN employees ON titles.emp_no = employees.emp_no
+JOIN salaries ON employees.emp_no = salaries.emp_no
+WHERE salaries.to_date > NOW() -- Récupère uniquement le salaire ACTUEL de l'employé
+  AND titles.to_date > NOW()   -- Récupère uniquement le poste ACTUEL de l'employé
+GROUP BY titles.title, employees.gender;

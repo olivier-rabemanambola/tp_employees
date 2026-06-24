@@ -20,6 +20,7 @@ $departments = get_departments();
                 <th>Department ID</th>
                 <th>Department Name</th>
                 <th>Manager</th>
+                <th>Number of Employees</th>
             </tr>
         </thead>
 
@@ -30,10 +31,14 @@ $departments = get_departments();
                     <td><a href="listemployees.php?dept_no=<?php echo $department['dept_no']; ?>"><?php echo $department['dept_no']; ?></a></td>
                     <td><?php echo $department['dept_name']; ?></td>
                     <td><?php echo $department['first_name'] . ' ' . $department['last_name']; ?></td>
+                    <td><?php echo $department['nb_employees']; ?></td>
         
                 </tr>
             <?php endforeach; ?>
         </tbody>
+    </table>
+
+        <a href="staff.php">View Staff by Title</a>
 
 </body>
 </html>

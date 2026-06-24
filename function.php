@@ -37,11 +37,13 @@ function get_one_line($sql)
 
 function get_departments()
 {
-    $sql = "select * 
+    $sql = "select departments.dept_no, departments.dept_name, count(distinct dept_emp.emp_no) as nb_employees, employees.first_name, employees.last_name
             from departments
             join dept_manager on departments.dept_no = dept_manager.dept_no
             join employees on dept_manager.emp_no = employees.emp_no
-            where dept_manager.to_date = '9999-01-01'";
+            join dept_emp on departments.dept_no = dept_emp.dept_no
+            where dept_manager.to_date = '9999-01-01'
+            group by departments.dept_no";
     return get_all_lines($sql);
 }
 
@@ -121,4 +123,20 @@ function researches_values($department_id, $name, $minimum_age, $maximum_age, $n
     $sql = $sql." LIMIT $offset, 20";
 
     return get_all_lines($sql) ;  
+}
+
+function get_titles_staff() {
+    $sql = "SELECT 
+    employees.gender AS gender, 
+    titles.title AS title, 
+    COUNT(DISTINCT employees.emp_no) AS nb_employees,
+    AVG(salaries.salary) AS avg_salary
+FROM titles
+JOIN employees ON titles.emp_no = employees.emp_no
+JOIN salaries ON employees.emp_no = salaries.emp_no
+WHERE salaries.to_date > NOW() 
+  AND titles.to_date > NOW()   
+GROUP BY titles.title, employees.gender";
+
+    return get_all_lines($sql);
 }
